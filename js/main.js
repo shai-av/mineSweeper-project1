@@ -16,7 +16,7 @@ var gGame = {
 };
 
 function init() {
-    gBoard = createBoard();
+    if (!gIsManualMode) gBoard = createBoard();
     renderBoard(gBoard);
     if (gClockInterval) stopClock();
     setNewGameValues();
@@ -24,14 +24,14 @@ function init() {
 }
 
 function setNewGameValues() {
-    gGame = {
-        isGameOn: false,
-        lives: 3,
-        hints: 3,
-        safeClicks: 3
-    };
+    gGame.isGameOn = false;
+    gGame.lives = 3;
+    gGame.hints = 3;
+    gGame.safeClicks = 3;
+
     gIsFirstClick = true;
-    gGame.markedCount = gLevel.mines;
+    console.log(gGame.markedCount);
+    if (!gIsManualMode) gGame.markedCount = 0;
     renderBy_gGame();
     resetStepsBackup();
     document.querySelector('.smile').innerText = '😄';
@@ -64,6 +64,7 @@ function renderBoard(board) {
         for (var j = 0; j < board.length; j++) {
             var cell = board[i][j];
             var className = 'cell ';
+            ///
             var spanClassName = '';
             var cellText = '';
             if (cell.isMine) className += 'mine ', cellText = MINE;
@@ -91,8 +92,11 @@ function createMines(firstClick_I, firstClick_J) {
         for (var i = 0; i < gLevel.mines; i++) {
             var location = getMineRandomLocation(firstClick_I, firstClick_J);
             gBoard[location.i][location.j].isMine = true;
+            gGame.markedCount++;
+
         }
     }
+    updateMarked();
 }
 
 function getMineRandomLocation(Xi, Xj) {
@@ -148,7 +152,11 @@ function cellClicked(cell, i, j) {
 }
 
 function onFirstClick(i, j) {
-    createMines(i, j);
+    if (!gIsManualMode) {
+        createMines(i, j);
+    } else {
+        gIsManualMode = false;
+    }
     gIsFirstClick = false;
     gGame.isGameOn = true;
     runMinesAroundCount(gBoard);

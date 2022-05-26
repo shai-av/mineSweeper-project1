@@ -12,6 +12,9 @@ var gIsHintMode = false;
 //7Boom! globals
 var gIs7BoomMode = false;
 
+//manual globals
+var gIsManualMode = false;
+
 /// undo
 function saveLastInstance() {
     if (gIsFirstClick) return;
@@ -137,17 +140,19 @@ function sevenBoomBtnClick() {
 }
 
 function setMines7Boom(gBoard) {
-    var cells = [];
     var counter = 1;
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++, counter++) {
             if (counter % 7 === 0) {
                 gBoard[i][j].isMine = true;
+                gGame.markedCount++;
+
             }
         }
     }
     gLevel.mines = parseInt(counter / 7);
     gIs7BoomMode = false;
+    updateMarked();
 }
 
 //local storage
@@ -172,4 +177,46 @@ function updateScoreIfHigher(key, value) {
         localStorage.setItem(key, value);
         updateBestScoreFromLocalStorage();
     }
+}
+
+function renderBlankBoard(board) {
+    document.querySelector('.manualStart').style.display = 'inline-block';
+
+    var strHTML = '<table oncontextmenu="return false;"><tbody>';
+    for (var i = 0; i < board.length; i++) {
+        strHTML += '<tr>';
+        for (var j = 0; j < board.length; j++) {
+            strHTML += `<td data-i="${i}" data-j="${j}"
+                  oncontextmenu="mouseRightClick(this,${i},${j})"
+                  onclick="addMine(this,${i} ,${j})"
+                  style="width:${100 / gLevel.size}% ;height:${100 / gLevel.size}%" 
+                  class="cell " ></td>`;
+        }
+        strHTML += '</tr>';
+    }
+    strHTML += '</tbody></table>';
+
+    var elBoard = document.querySelector('.board-container');
+    elBoard.innerHTML = strHTML;
+}
+
+function addMine(cell, i, j) {
+    cell.classList.add('mine');
+    cell.innerText = '💣';
+    gBoard[i][j].isMine = true;
+    console.log(gBoard);
+    gGame.markedCount++;
+}
+
+function manualBtnClick() {
+    gIsManualMode = true;
+    gBoard = createBoard();
+    renderBlankBoard(gBoard);
+    gGame.markedCount = 0;
+}
+
+function manualStartBtnClick(btn) {
+    init();
+    updateMarked();
+    btn.style.display = 'none';
 }
