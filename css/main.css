@@ -69,10 +69,10 @@ table {
     transition: 1s;
 }
 .hint {
-    cursor: url('/img/hint-cropped.png'), auto;
+    cursor: url('img/hint-cropped.png'), auto;
 }
 .hint td {
-    cursor: url('/img/hint-cropped.png'), auto;
+    cursor: url('img/hint-cropped.png'), auto;
 }
 .mine {
     background-color: #F44336;
