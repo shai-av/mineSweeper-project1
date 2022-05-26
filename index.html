@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mine Sweeper</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -13,19 +13,51 @@
     <div class="main">
         <div class="bar">
             <div class="markLeft div-line"></div>
-            <div class="smile div-line"> </div>
+            <div class="smile div-line" onclick="init()">😄</div>
             <div class="lives div-line"></div>
             <div class="clockDiv div-line"><span class="clock">0</span></div>
         </div>
+        <div class="sideDiv"></div>
         <div class="board-container"></div>
+        <div class="sideDiv instructions">
+            <span class="instructionsTitle">instructions</span>
+            <ul>
+                <li>To start the game and enable all other functions, click once on any cell </li>
+                <li>Left click, reveals cell content</li>
+                <li>Right click, flags cell as suspect to be a mine!</li>
+                <li>click on any difficulty level or "7Boom" will start a new game as chosen</li>
+                <li>Hints - press hint button to uncover cell and it 1st degree surroundings cells for 2 seconds </li>
+                <li>Safe click will mark a safe (mineless) cell </li>
+            </ul>
+            have fun!
+        </div>
+        <div class="difficulty">
+            <button onclick="difficulty('easy')">easy</button>
+            <button onclick="difficulty('medium')">medium</button>
+            <button onclick="difficulty('hard')">hard</button>
+            <button onclick="undo()">undo</button>
+        </div>
+
+        <div class="extra">
+            <div class="hint hintDiv" onclick="hintBtnClick()">Hints<br><span class="hint hintLeftTxt">3</span></div>
+            <div class="safeClickDiv" onclick="safeBtnClick()">Safe Click<br><span class="safeClicksLeftTxt">3</span>
+            </div>
+            <div class="sevBoomDiv" onclick="sevenBoomBtnClick()">7<br> BOOM!</div>
+        </div>
+        <div>
+            <h3><span class="bestScoreTitle">Best Score</span></h3>
+            <span class="score">easy : <span class="easyScore">no record</span></span>
+            <span class="score">medium : <span class="mediumScore">no record</span></span>
+            <span class="score">hard : <span class="hardScore">no record</span></span>
+        </div>
     </div>
-    <div class="difficulty">
-        <button onclick="difficulty('easy')">easy</button>
-        <button onclick="difficulty('medium')">medium</button>
-        <button onclick="difficulty('hard')">hard</button>
-        <button onclick="undo()">undo</button>
     </div>
+    <footer>
+        <hr>
+        Shai Avraham
+    </footer>
 </body>
 <script src="js/main.js"></script>
+<script src="js/bonus.js"></script>
 
 </html>
