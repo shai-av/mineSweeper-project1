@@ -18,7 +18,6 @@ var gIsManualMode = false;
 /// undo
 function saveLastInstance() {
     if (gIsFirstClick) return;
-
     gBoardLastInstance = copy_2d_Array(gBoard);
     gGameLastInstance = JSON.parse(JSON.stringify(gGame));
     gSteps[gCurrStep] = ({
@@ -40,7 +39,7 @@ function undo() {
     renderBy_gGame();
 }
 
-//hint
+///hint
 function hintBtnClick() {
     if (!gGame.isGameOn) return;
     if (gGame.hints === 0) return;
@@ -90,7 +89,7 @@ function addCover(cell) {
     cell.classList.add('cover');
 }
 
-//safe-click
+///safe-click
 function updateSafeClicks() {
     document.querySelector('.safeClicksLeftTxt').innerText = gGame.safeClicks;
 }
@@ -133,7 +132,7 @@ function getSafeClickRandomLocation() {
     return { i, j };
 }
 
-//7Boom!
+///7Boom!
 function sevenBoomBtnClick() {
     gIs7BoomMode = true;
     init();
@@ -146,7 +145,6 @@ function setMines7Boom(gBoard) {
             if (counter % 7 === 0) {
                 gBoard[i][j].isMine = true;
                 gGame.markedCount++;
-
             }
         }
     }
@@ -155,7 +153,7 @@ function setMines7Boom(gBoard) {
     updateMarked();
 }
 
-//local storage
+///local storage
 function updateBestScoreFromLocalStorage() {
     var difficulties = ['easy', 'medium', 'hard'];
     for (var i = 0; i < difficulties.length; i++) {
@@ -178,7 +176,7 @@ function updateScoreIfHigher(key, value) {
         updateBestScoreFromLocalStorage();
     }
 }
-
+///manual position mines
 function renderBlankBoard(board) {
     document.querySelector('.manualStart').style.display = 'inline-block';
 
@@ -202,9 +200,8 @@ function renderBlankBoard(board) {
 
 function addMine(cell, i, j) {
     cell.classList.add('mine');
-    cell.innerText = '💣';
+    cell.innerHTML = MINE;
     gBoard[i][j].isMine = true;
-    console.log(gBoard);
     gGame.markedCount++;
 }
 

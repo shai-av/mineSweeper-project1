@@ -20,7 +20,7 @@ body {
 .div-line {
     font-size: x-large;
     padding: 7px;
-    background-color: #c92121;
+    background-color: #6c1bd0cf;
     height: 50px;
     width: 130px;
     margin: 10px;
@@ -37,8 +37,13 @@ body {
     cursor: pointer;
 }
 
+.mineImg {
+    width: 100%;
+    max-width: 58px
+}
+
 .clock {
-    color: rgba(255, 0, 0, 0.623);
+    color: rgb(168 126 177);
 }
 
 .clockDiv {
@@ -80,15 +85,15 @@ table {
 }
 
 .hint {
-    cursor: url('/img/hint-cropped.png'), auto;
+    cursor: url('../img/hint-cropped.png'), auto;
 }
 
 .hint td {
-    cursor: url('/img/hint-cropped.png'), auto;
+    cursor: url('../img/hint-cropped.png'), auto;
 }
 
 .mine {
-    background-color: #F44336;
+    background-color: #bb00ff33
 }
 
 .nextToMine1 {
@@ -113,7 +118,6 @@ table {
 
 .nextToMine6 {
     color: rgb(255, 0, 230);
-    ;
 }
 
 .nextToMine7 {
@@ -131,8 +135,7 @@ table {
 td.cover {
     background-color: rgb(4, 27, 4);
     content-visibility: hidden;
-    /* background-image: radial-gradient(rgb(121, 123, 118), rgb(63, 63, 60)); */
-    background-image: radial-gradient(rgb(220 23 23), rgb(63, 63, 60));
+    background-image: radial-gradient(rgb(121, 123, 118), rgb(63, 63, 60));
 }
 
 td.marked {
@@ -145,7 +148,7 @@ footer {
 }
 
 button {
-    background-color: #c92121;
+    background-color: #64229d4a;
     margin: 10px;
     height: 50px;
     width: 100px;
@@ -156,6 +159,10 @@ button {
     padding: 7px;
     font-family: fantasy;
     box-shadow: 10px 10px 5px 2px;
+}
+
+.undoBtn {
+    background-color: #cd94ff;
 }
 
 .extra div {
@@ -200,10 +207,15 @@ button {
 
 .instructions {
     text-align: left;
+    background-color: #c8b8d77a;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 2%;
 }
 
 .instructionsTitle {
     text-decoration-line: underline;
+
 }
 
 .bestScoreTitle {

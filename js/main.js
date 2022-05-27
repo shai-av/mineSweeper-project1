@@ -1,12 +1,12 @@
 'use strict'
-const MINE = '💣';
+const MINE = `<img src="img/mine.png" class="mineImg" alt="💣"></img>`;
+// const MINE = '💣';
 
 var gClock = document.querySelector('.clock');
 var gClockInterval;
 var gIsFirstClick;
 var gBoard;
-var gLevel;
-var gGame;
+
 var gLevel = { size: 4, mines: 2, difficulty: 'easy' };
 var gGame = {
     isGameOn: false,
@@ -30,7 +30,6 @@ function setNewGameValues() {
     gGame.safeClicks = 3;
 
     gIsFirstClick = true;
-    console.log(gGame.markedCount);
     if (!gIsManualMode) gGame.markedCount = 0;
     renderBy_gGame();
     resetStepsBackup();
@@ -64,7 +63,6 @@ function renderBoard(board) {
         for (var j = 0; j < board.length; j++) {
             var cell = board[i][j];
             var className = 'cell ';
-            ///
             var spanClassName = '';
             var cellText = '';
             if (cell.isMine) className += 'mine ', cellText = MINE;
@@ -93,7 +91,6 @@ function createMines(firstClick_I, firstClick_J) {
             var location = getMineRandomLocation(firstClick_I, firstClick_J);
             gBoard[location.i][location.j].isMine = true;
             gGame.markedCount++;
-
         }
     }
     updateMarked();
@@ -142,16 +139,17 @@ function cellClicked(cell, i, j) {
     }
     if (gBoard[i][j].isMarked) return;
     if (gBoard[i][j].isShown) return;
-    saveLastInstance();
+
+    if (gIsFirstClick) onFirstClick(cell, i, j);
+    else saveLastInstance();
     gBoard[i][j].isShown = true;
-    if (gIsFirstClick) onFirstClick(i, j);
     cell.classList.remove('cover');
     if (isCellEmpty(i, j)) emptyCellClick(i, j);
     else if (isCellMine(i, j)) mineCellClick();
     if (isGameOver()) endGame();
 }
 
-function onFirstClick(i, j) {
+function onFirstClick(cell, i, j) {
     if (!gIsManualMode) {
         createMines(i, j);
     } else {
@@ -160,8 +158,11 @@ function onFirstClick(i, j) {
     gIsFirstClick = false;
     gGame.isGameOn = true;
     runMinesAroundCount(gBoard);
-    renderBoard(gBoard);
     startClock();
+    saveLastInstance();
+    gBoard[i][j].isShown = true;
+    cell.classList.remove('cover');
+    renderBoard(gBoard);
 }
 
 function mouseRightClick(cell, i, j) {
@@ -180,7 +181,7 @@ function mouseRightClick(cell, i, j) {
         gGame.markedCount--;
         updateMarked();
     }
-    if (isGameOver()) endGame('win');
+    if (isGameOver()) endGame(); // win
 }
 
 function updateMarked() {
@@ -207,11 +208,14 @@ function emptyCellClick(cellI, cellJ) {
 
 function mineCellClick() {
     gGame.lives--;
+    gGame.markedCount--;
     updateLives();
-    if (!gGame.lives === 0) {
+    updateMarked();
+
+    if (gGame.lives !== 0) {
         document.querySelector('.smile').innerText = '😖';
         setTimeout(function () {
-            document.querySelector('.smile').innerText = '😄';
+            if (gGame.isGameOn) document.querySelector('.smile').innerText = '😄';
         }, 750);
     }
 }
