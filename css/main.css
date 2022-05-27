@@ -226,3 +226,7 @@ button {
 span.score span {
     margin-right: 30px;
 }
+
+.noClick{
+    cursor: not-allowed;
+}

@@ -134,6 +134,7 @@ function getSafeClickRandomLocation() {
 
 ///7Boom!
 function sevenBoomBtnClick() {
+    if (gIsManualMode) return;
     gIs7BoomMode = true;
     init();
 }
@@ -210,10 +211,28 @@ function manualBtnClick() {
     gBoard = createBoard();
     renderBlankBoard(gBoard);
     gGame.markedCount = 0;
+    addClassBySelector('.difficulty button', 'noClick');
+    document.querySelector('.sevBoomDiv').classList.add('noClick')
 }
 
 function manualStartBtnClick(btn) {
     init();
     updateMarked();
     btn.style.display = 'none';
+    removeClassBySelector('.difficulty button', 'noClick');
+    document.querySelector('.sevBoomDiv').classList.remove('noClick')
+}
+
+function addClassBySelector(selector, className) {
+    var elements = document.querySelectorAll(selector);
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].classList.add(className+'');
+    }
+}
+
+function removeClassBySelector(selector, className) {
+    var elements = document.querySelectorAll(selector);
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].classList.remove(className);
+    }
 }

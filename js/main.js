@@ -247,12 +247,7 @@ function endGame() {
     gGame.isGameOn = false;
     stopClock();
     if (gGame.lives === 0) {
-        var mines = document.querySelectorAll('.mine');
-        for (var i = 0; i < mines.length; i++) {
-            if (!mines[i].isMarked) {
-                mines[i].classList.remove('cover');
-            }
-        }
+        removeClassBySelector('.mine', 'cover');
         document.querySelector('.smile').innerText = '😵';
         console.log('GAME OVER');
     } else {
@@ -266,6 +261,7 @@ function endGame() {
 }
 
 function difficulty(level) {
+    if (gIsManualMode) return;
     switch (level) {
         case 'easy':
             gLevel.size = 4;
