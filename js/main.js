@@ -181,7 +181,7 @@ function mouseRightClick(cell, i, j) {
         gGame.markedCount--;
         updateMarked();
     }
-    if (isGameOver()) endGame(); // win
+    if (isGameOver()) endGame();
 }
 
 function updateMarked() {
@@ -198,7 +198,7 @@ function emptyCellClick(cellI, cellJ) {
             if (isCellEmpty(i, j) && !gBoard[i][j].isShown) {
                 gBoard[i][j].isShown = true;
                 emptyCellClick(i, j);
-            } else if (!gBoard[i][j].isShown && gBoard[i][j].minesAroundCount > 0) {
+            } else if (!gBoard[i][j].isMine && !gBoard[i][j].isMarked) {
                 gBoard[i][j].isShown = true;
             }
         }
@@ -246,17 +246,15 @@ function isGameOver() {
 function endGame() {
     gGame.isGameOn = false;
     stopClock();
-    if (gGame.lives === 0) {
+    if (gGame.lives === 0) { //lose
         removeClassBySelector('.mine', 'cover');
         document.querySelector('.smile').innerText = '😵';
-        console.log('GAME OVER');
-    } else {
+    } else {// win
         document.querySelector('.smile').innerText = '😎';
         var score = +gClock.innerText;
         var difficulty = gLevel.difficulty;
 
         updateScoreIfHigher(difficulty, score);
-        console.log('you WON !');
     }
 }
 

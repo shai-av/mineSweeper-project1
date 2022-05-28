@@ -30,6 +30,7 @@ function saveLastInstance() {
 function undo() {
     if (!gGame.isGameOn) return;
     if (gCurrStep <= 0) return;
+    if(gIsManualMode) return;
     gBoard = gSteps[gCurrStep - 1].board;
     gGame = gSteps[gCurrStep - 1].game;
     if (gCurrStep - 1 > 0) gSteps.pop();
@@ -177,6 +178,7 @@ function updateScoreIfHigher(key, value) {
         updateBestScoreFromLocalStorage();
     }
 }
+
 ///manual position mines
 function renderBlankBoard(board) {
     document.querySelector('.manualStart').style.display = 'inline-block';
@@ -212,7 +214,7 @@ function manualBtnClick() {
     renderBlankBoard(gBoard);
     gGame.markedCount = 0;
     addClassBySelector('.difficulty button', 'noClick');
-    document.querySelector('.sevBoomDiv').classList.add('noClick')
+    document.querySelector('.sevBoomDiv').classList.add('noClick');
 }
 
 function manualStartBtnClick(btn) {
@@ -220,7 +222,7 @@ function manualStartBtnClick(btn) {
     updateMarked();
     btn.style.display = 'none';
     removeClassBySelector('.difficulty button', 'noClick');
-    document.querySelector('.sevBoomDiv').classList.remove('noClick')
+    document.querySelector('.sevBoomDiv').classList.remove('noClick');
 }
 
 function addClassBySelector(selector, className) {
